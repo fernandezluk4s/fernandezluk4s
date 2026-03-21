@@ -142,6 +142,24 @@ footer { background: #070a13; color: white; padding: 80px 5% 20px; }
     gap: 50px;
 }
 
+/* Remove os pontos (bullets) da lista no footer */
+.footer-links ul {
+    list-style: none; /* Esta é a linha mágica que tira os pontos */
+    padding: 0;       /* Remove o recuo padrão da lista */
+    margin: 0;
+}
+
+/* Opcional: Estiliza os links para ficarem mais bonitos */
+.footer-links a {
+    text-decoration: none; /* Tira o sublinhado */
+    color: var(--gray);    /* Usa a cor cinza que você já definiu */
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--primary); /* Muda para azul ao passar o mouse */
+}
+
 .copyright {
     text-align: center;
     margin-top: 60px;
