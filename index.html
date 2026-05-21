@@ -3,186 +3,1111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucas Fernandes | Engineering & Solutions</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Lucas Fernandes | Engenharia de Computação</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0a0a0c;
+            --bg2: #111115;
+            --surface: #16161c;
+            --border: #222230;
+            --accent: #00e5ff;
+            --accent2: #7c3aed;
+            --text: #e8e8f0;
+            --muted: #6b6b80;
+            --font-head: 'Syne', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 14px;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ── NOISE OVERLAY ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: .35;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(10,10,12,.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 5%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: .05em;
+            color: var(--text);
+        }
+        .logo span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: .75rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            transition: color .2s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links .btn-nav {
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 6px 16px;
+        }
+        .nav-links .btn-nav:hover { background: var(--accent); color: var(--bg); }
+
+        /* ── HERO ── */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 5% 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* grid backdrop */
+        #home::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 48px 48px;
+            opacity: .35;
+        }
+
+        /* glow blob */
+        #home::after {
+            content: '';
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0,229,255,.07) 0%, transparent 70%);
+            top: 10%; right: -5%;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: .7rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            margin-bottom: 28px;
+        }
+        .chip::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: blink 1.4s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+        h1 {
+            font-family: var(--font-head);
+            font-size: clamp(2.4rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -.02em;
+            margin-bottom: 24px;
+        }
+        .hl { color: var(--accent); }
+        .hl2 { color: var(--accent2); }
+
+        .hero-title span{
+            white-space: nowrap;
+        }
+
+        .hero-desc {
+            color: var(--muted);
+            font-size: .85rem;
+            max-width: 540px;
+            margin-bottom: 36px;
+        }
+
+        .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+        .btn-p {
+            background: var(--accent);
+            color: var(--bg);
+            font-family: var(--font-mono);
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: 12px 28px;
+            text-decoration: none;
+            transition: opacity .2s, transform .2s;
+        }
+        .btn-p:hover { opacity: .85; transform: translateY(-2px); }
+
+        .btn-s {
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: 12px 28px;
+            text-decoration: none;
+            transition: border-color .2s, color .2s, transform .2s;
+        }
+        .btn-s:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+        /* scrolling tech ticker */
+        .ticker-wrap {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            overflow: hidden;
+            border-top: 1px solid var(--border);
+            background: var(--bg2);
+            padding: 10px 0;
+        }
+        .ticker {
+            display: flex;
+            gap: 60px;
+            white-space: nowrap;
+            animation: ticker 22s linear infinite;
+            width: max-content;
+        }
+        .ticker span {
+            font-size: .65rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .ticker span.t-accent { color: var(--accent); }
+        @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+        /* ── ABOUT ── */
+        #about {
+            padding: 100px 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-visual {
+            position: relative;
+        }
+
+        .about-img-wrap {
+            position: relative;
+            display: inline-block;
+        }
+        .about-img-wrap img {
+            width: 100%;
+            max-width: 400px;
+            display: block;
+            filter: grayscale(20%) contrast(1.05);
+            border: 1px solid var(--border);
+        }
+        .about-img-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border: 1px solid var(--accent);
+            opacity: .3;
+            pointer-events: none;
+        }
+        .about-img-wrap::after {
+            content: '';
+            position: absolute;
+            bottom: -24px; right: -24px;
+            width: 120px; height: 120px;
+            background: var(--accent2);
+            opacity: .15;
+            z-index: -1;
+        }
+
+        .status-badge {
+            position: absolute;
+            bottom: -18px; left: 20px;
+            background: var(--bg);
+            border: 1px solid var(--accent);
+            padding: 8px 16px;
+            font-size: .65rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .section-label {
+            font-size: .65rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        h2 {
+            font-family: var(--font-head);
+            font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -.02em;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: var(--muted);
+            font-size: .82rem;
+            margin-bottom: 16px;
+        }
+        .about-text p strong { color: var(--text); }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 24px;
+        }
+        .tag {
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            font-size: .65rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: border-color .2s, color .2s;
+        }
+        .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* ── STATS ── */
+        .stats-bar {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .stat {
+            padding: 32px 5%;
+            border-right: 1px solid var(--border);
+            text-align: center;
+        }
+        .stat:last-child { border-right: none; }
+        .stat strong {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: block;
+        }
+        .stat span {
+            font-size: .65rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ── SKILLS ── */
+        #skills {
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skills-title { text-align: center; margin-bottom: 60px; }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            border: 1px solid var(--border);
+        }
+
+        .skill-block {
+            background: var(--bg2);
+            padding: 32px 28px;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            transition: background .2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-block:hover { background: var(--surface); }
+        .skill-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform .3s;
+            transform-origin: bottom;
+        }
+        .skill-block:hover::before { transform: scaleY(1); }
+
+        .skill-block i {
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin-bottom: 14px;
+            display: block;
+        }
+        .skill-block h3 {
+            font-family: var(--font-head);
+            font-size: .95rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .skill-block p {
+            color: var(--muted);
+            font-size: .75rem;
+            line-height: 1.6;
+        }
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 14px;
+        }
+        .skill-pill {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 3px 10px;
+            font-size: .6rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ── PROJECTS ── */
+        #projects {
+            padding: 100px 5%;
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .projects-header {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .projects-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+        }
+
+        .proj-card {
+            background: var(--bg2);
+            padding: 36px 32px;
+            position: relative;
+            overflow: hidden;
+            transition: background .25s;
+        }
+        .proj-card:hover { background: var(--surface); }
+
+        .proj-num {
+            font-family: var(--font-head);
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--border);
+            line-height: 1;
+            margin-bottom: 12px;
+            transition: color .25s;
+        }
+        .proj-card:hover .proj-num { color: var(--accent); opacity: .25; }
+
+        .proj-tag {
+            font-size: .6rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .proj-card h3 {
+            font-family: var(--font-head);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .proj-card p {
+            color: var(--muted);
+            font-size: .75rem;
+            line-height: 1.65;
+        }
+
+        .proj-techs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 20px;
+        }
+        .proj-tech {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 3px 10px;
+            font-size: .6rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .proj-arrow {
+            position: absolute;
+            bottom: 28px; right: 28px;
+            width: 36px; height: 36px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8rem;
+            color: var(--muted);
+            transition: all .2s;
+        }
+        .proj-card:hover .proj-arrow {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* featured project */
+        .proj-card.featured {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(0,229,255,.04), transparent);
+            border-left: 3px solid var(--accent);
+        }
+
+        /* ── TIMELINE ── */
+        #trajectory {
+            padding: 100px 5%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline {
+            position: relative;
+            margin-top: 60px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .tl-item {
+            padding-left: 40px;
+            padding-bottom: 48px;
+            position: relative;
+        }
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -4px; top: 6px;
+            width: 9px; height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 12px var(--accent);
+        }
+
+        .tl-year {
+            font-size: .62rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .tl-item h3 {
+            font-family: var(--font-head);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .tl-item p {
+            color: var(--muted);
+            font-size: .78rem;
+        }
+
+        /* ── SOCIAL / CONTACT ── */
+        #social {
+            padding: 100px 5%;
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+        }
+
+        .social-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-header { text-align: center; margin-bottom: 60px; }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .social-card {
+            background: var(--bg2);
+            padding: 36px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--muted);
+            transition: background .2s, color .2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .social-card:hover { background: var(--surface); color: var(--accent); }
+        .social-card i { font-size: 1.5rem; }
+        .social-card span {
+            font-size: .62rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 40px 5%;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-logo {
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: .95rem;
+            letter-spacing: .05em;
+        }
+        .footer-logo span { color: var(--accent); }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+        .footer-links a {
+            text-decoration: none;
+            font-size: .65rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color .2s;
+        }
+        .footer-links a:hover { color: var(--accent); }
+
+        .copyright {
+            font-size: .62rem;
+            color: var(--muted);
+            letter-spacing: .08em;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            #about { grid-template-columns: 1fr; gap: 60px; }
+            .about-img-wrap img { max-width: 100%; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .stat { border-bottom: 1px solid var(--border); }
+            .skills-grid { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .proj-card.featured { grid-column: span 1; }
+            .social-grid { grid-template-columns: repeat(2, 1fr); }
+            footer { flex-direction: column; gap: 24px; text-align: center; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+            .nav-links { display: none; }
+        }
+
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="nav-content">
-            <span class="logo">LUCAS<span>FERNANDES</span></span>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">Trajetória</a></li>
-                <li><a href="#services">Expertise</a></li>
-                <li><a href="#social" class="btn-nav">Contato</a></li>
-            </ul>
+<!-- ── NAV ── -->
+<nav>
+    <span class="logo">LUCAS<span>.</span>DEV</span>
+    <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">Sobre</a></li>
+        <li><a href="#skills">Stack</a></li>
+        <li><a href="#projects">Projetos</a></li>
+        <li><a href="#social" class="btn-nav">Contato</a></li>
+    </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="home">
+    <div class="hero-inner">
+        <div class="chip">Disponível para Estágio · Rio de Janeiro</div>
+        <h1 class="hero-title">
+            <span>Engenharia de</span><br>
+            <span>Computação &amp;</span><br>
+            <span class="hl">Sistemas</span><br>
+            <span class="hl2">Inteligentes.</span>
+        </h1>
+        <p class="hero-desc">
+            Estudante na UVA · Rio de Janeiro. Construo soluções que cruzam o mundo físico com o digital — de microcontroladores embarcados a aplicações web robustas.
+        </p>
+        <div class="hero-btns">
+            <a href="#projects" class="btn-p">Ver Projetos</a>
+            <a href="https://github.com/fernandezluk4s" target="_blank" class="btn-s">GitHub &nbsp;<i class="fab fa-github"></i></a>
+            <a href="https://drive.google.com/uc?export=download&id=1y4djDtm1k4gLYWzKIqottihi2oKzNqOh" class="btn-s">Download CV &nbsp;<i class="fas fa-arrow-down"></i></a>
         </div>
-    </nav>
+    </div>
 
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <span class="badge">Engenharia de Computação & IoT</span>
-            <h1>Inovação Tecnológica com <br><span class="highlight">Visão Criativa.</span></h1>
-            <p>Desenvolvendo sistemas inteligentes e capturando perspectivas únicas através da tecnologia e da fotografia.</p>
-            <div class="hero-btns">
-                <a href="#services" class="btn-primary">Ver Soluções</a>
-                <a href="https://github.com/fernandezluk4s" class="btn-secondary">GitHub <i class="fab fa-github"></i></a>
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <span class="t-accent">// ENGENHARIA DE COMPUTAÇÃO</span>
+            <span>ESP32</span>
+            <span>MQTT</span>
+            <span>IoT</span>
+            <span>Python</span>
+            <span>Java</span>
+            <span>C / C++</span>
+            <span>MySQL</span>
+            <span>Git</span>
+            <span>POO</span>
+            <span class="t-accent">// SISTEMAS EMBARCADOS</span>
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>UVA · RJ</span>
+            <span class="t-accent">// OPEN TO WORK</span>
+            <!-- duplicate for seamless loop -->
+            <span class="t-accent">// ENGENHARIA DE COMPUTAÇÃO</span>
+            <span>ESP32</span>
+            <span>MQTT</span>
+            <span>IoT</span>
+            <span>Python</span>
+            <span>Java</span>
+            <span>C / C++</span>
+            <span>MySQL</span>
+            <span>Git</span>
+            <span>POO</span>
+            <span class="t-accent">// SISTEMAS EMBARCADOS</span>
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>UVA · RJ</span>
+            <span class="t-accent">// OPEN TO WORK</span>
+        </div>
+    </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+    <div class="about-visual reveal">
+        <div class="about-img-wrap">
+            <img src="perfil.jpg" alt="Lucas Fernandes">
+            <div class="status-badge">Engenharia · UVA · 2027</div>
+        </div>
+    </div>
+
+    <div class="about-text reveal">
+        <span class="section-label">// sobre mim</span>
+        <h2>Entre <span class="hl">bits</span> e <span class="hl2">circuitos.</span></h2>
+        <p>
+            Sou <strong>Lucas Fernandes</strong>, graduando em Engenharia de Computação na <strong>Universidade Veiga de Almeida (UVA)</strong>, com previsão de formatura em dezembro de 2027.
+        </p>
+        <p>
+            Meu perfil combina sólida base em <strong>software</strong> (Java, Python, C, JavaScript, MySQL) com experiência prática em <strong>hardware e sistemas embarcados</strong> (ESP32, Arduino, MQTT, amplificadores operacionais, IoT).
+        </p>
+        <p>
+            Não fico só na teoria — tenho mentalidade <em>maker</em>: gosto de transformar ideias em projetos reais, bem documentados e prontos para o mercado. Estou em busca do meu primeiro estágio na área de <strong>TI / Desenvolvimento</strong>.
+        </p>
+        <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Java</span>
+            <span class="tag">C / C++</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">ESP32</span>
+            <span class="tag">Arduino</span>
+            <span class="tag">MQTT</span>
+            <span class="tag">IoT</span>
+            <span class="tag">Git / GitHub</span>
+            <span class="tag">HTML / CSS</span>
+            <span class="tag">POO</span>
+        </div>
+    </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats-bar">
+    <div class="stat reveal"><strong>3+</strong><span>Anos de Código</span></div>
+    <div class="stat reveal"><strong>15+</strong><span>Projetos IoT</span></div>
+    <div class="stat reveal"><strong>UVA</strong><span>Engenharia de Computação</span></div>
+    <div class="stat reveal"><strong>RJ</strong><span>Nova Iguaçu · Rio de Janeiro</span></div>
+</div>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+    <div class="skills-title reveal">
+        <span class="section-label">// stack técnica</span>
+        <h2>Áreas de <span class="hl">Expertise</span></h2>
+    </div>
+
+    <div class="skills-grid">
+        <div class="skill-block reveal">
+            <i class="fas fa-microchip"></i>
+            <h3>Sistemas Embarcados & IoT</h3>
+            <p>Arquitetura e programação de microcontroladores para soluções industriais, residenciais e assistivas.</p>
+            <div class="skill-items">
+                <span class="skill-pill">ESP32</span>
+                <span class="skill-pill">Arduino</span>
+                <span class="skill-pill">MQTT</span>
+                <span class="skill-pill">C / C++</span>
+                <span class="skill-pill">Eletrônica</span>
+                <span class="skill-pill">OpAmp</span>
             </div>
         </div>
-    </section>
 
-    <section id="about" class="about">
-        <div class="about-container">
-            <div class="about-image">
-                <img src="perfil.jpg" alt="Lucas de Almeida">
-                <div class="experience-badge">
-                    <span>ESTUDANTE DE</span>
-                    <strong>ENGENHARIA</strong>
-                </div>
-            </div>
-            <div class="about-text">
-                <span class="badge">Minha Trajetória</span>
-                <h2>Construindo o futuro entre <span class="highlight">bits e lentes.</span></h2>
-                <p>
-                    Sou Lucas Fernandes, graduando em Engenharia de Computação na UVA. Minha jornada é marcada pela curiosidade técnica e pela paixão por criar soluções que conectam o mundo físico ao digital.
-                </p>
-                <p>
-                    Possuo experiência em <strong>IoT e Sistemas Embarcados</strong>, desenvolvo projetos que utilizam ESP32 e protocolos MQTT para transformar ambientes. Ao mesmo tempo, mantenho um olhar artístico através da <strong>fotografia e produção audiovisual</strong>, unindo a precisão da engenharia com a sensibilidade da comunicação visual.
-                </p>
-                <div class="skills-mini">
-                    <div class="skill-tag">Python</div>
-                    <div class="skill-tag">Java</div>
-                    <div class="skill-tag">IoT</div>
-                    <div class="skill-tag">C/C++</div>
-                    <div class="skill-tag">MySQL</div>
-                    <div class="skill-tag">ESP32</div>
-                    <div class="skill-tag">MQTT</div>
-                    <div class="skill-tag">Git/GitHub</div>
-                </div>
-                <a href="#contact" class="btn-secondary">Vamos conversar?</a>
+        <div class="skill-block reveal">
+            <i class="fas fa-code"></i>
+            <h3>Desenvolvimento de Software</h3>
+            <p>Aplicações robustas focadas em POO, lógica de negócio e processamento de dados estruturados.</p>
+            <div class="skill-items">
+                <span class="skill-pill">Java</span>
+                <span class="skill-pill">Python</span>
+                <span class="skill-pill">JavaScript</span>
+                <span class="skill-pill">MySQL</span>
+                <span class="skill-pill">POO</span>
+                <span class="skill-pill">Git</span>
             </div>
         </div>
-    </section>
 
-    <section class="stats">
-        <div class="stat-item"><strong>3+</strong><span>Anos de Código</span></div>
-        <div class="stat-item"><strong>15+</strong><span>Projetos IoT</span></div>
-        <div class="stat-item"><strong>UVA</strong><span>Graduação</span></div>
-        <div class="stat-item"><strong>RJ</strong><span>Atuação Principal</span></div>
-    </section>
-
-    <section id="services" class="services">
-        <h2 class="section-title">Nossas Áreas de Atuação</h2>
-        <div class="service-grid">
-            <div class="service-card">
-                <i class="fas fa-microchip"></i>
-                <h3>Sistemas Embarcados</h3>
-                <p>Arquitetura de hardware com ESP32, Arduino e protocolos MQTT para soluções industriais e residenciais.</p>
-            </div>
-            <div class="service-card">
-                <i class="fas fa-code"></i>
-                <h3>Software & Web</h3>
-                <p>Desenvolvimento robusto em Python, Java e JavaScript, focando em escalabilidade e experiência do usuário.</p>
-            </div>
-            <div class="service-card">
-                <i class="fas fa-camera-retro"></i>
-                <h3>Mídia Digital</h3>
-                <p>Produção visual estratégica, fotografia profissional e edição de vídeo para marcas de impacto.</p>
+        <div class="skill-block reveal">
+            <i class="fas fa-globe"></i>
+            <h3>Web & Interfaces</h3>
+            <p>Desenvolvimento de interfaces modernas e funcionais, com foco em usabilidade e design minimalista.</p>
+            <div class="skill-items">
+                <span class="skill-pill">HTML</span>
+                <span class="skill-pill">CSS</span>
+                <span class="skill-pill">JavaScript</span>
+                <span class="skill-pill">Responsivo</span>
             </div>
         </div>
-    </section>
 
-    <!-- GALERIA -->
-    <section id="gallery" class="gallery">
-        <h2 class="section-title">Projetos & Capturas</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="brian-2.0.jpg" alt="Descrição da foto 1">
-            </div>
-            <div class="gallery-item">
-                <img src="circuito.jpg" alt="Descrição da foto 2">
-            </div>
-            <div class="gallery-item">
-                <img src="chronos-care.jpg" alt="Descrição da foto 3">
-            </div>
-            <div class="gallery-item">
-                <img src="carro.jpg" alt="Descrição da foto 4">
-            </div>
-            <div class="gallery-item">
-                <img src="Gianna.JPG" alt="Descrição da foto 5">
-            </div>
-            <div class="gallery-item">
-                <img src="times.JPG" alt="Descrição da foto 6">
+        <div class="skill-block reveal">
+            <i class="fas fa-wave-square"></i>
+            <h3>Eletrônica Analógica & Áudio</h3>
+            <p>Circuitos com amplificadores operacionais, fontes de alimentação simétricas, filtros e sistemas de áudio de baixo custo.</p>
+            <div class="skill-items">
+                <span class="skill-pill">NE5532</span>
+                <span class="skill-pill">OpAmp</span>
+                <span class="skill-pill">±12V PSU</span>
+                <span class="skill-pill">Filtros RC</span>
+                <span class="skill-pill">P10</span>
             </div>
         </div>
-    </section>
 
-    <!-- REDES SOCIAIS -->
-    <section class="social-section" id="social">
-        <h2 class="section-title">Conecte-se comigo</h2>
+        <div class="skill-block reveal">
+            <i class="fas fa-database"></i>
+            <h3>Banco de Dados</h3>
+            <p>Modelagem relacional e consultas SQL aplicadas a sistemas reais de gerenciamento e controle de dados.</p>
+            <div class="skill-items">
+                <span class="skill-pill">MySQL</span>
+                <span class="skill-pill">SQL</span>
+                <span class="skill-pill">Modelagem ER</span>
+            </div>
+        </div>
+
+        <div class="skill-block reveal">
+            <i class="fas fa-tools"></i>
+            <h3>Ferramentas & Metodologias</h3>
+            <p>Versionamento, documentação técnica e prototipagem com foco em boas práticas de engenharia de software.</p>
+            <div class="skill-items">
+                <span class="skill-pill">Git / GitHub</span>
+                <span class="skill-pill">VS Code</span>
+                <span class="skill-pill">Linux</span>
+                <span class="skill-pill">ABNT</span>
+                <span class="skill-pill">Documentação</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+    <div class="projects-header reveal">
+        <div>
+            <span class="section-label">// projetos universitários</span>
+            <h2>O que eu <span class="hl">construo.</span></h2>
+        </div>
+        <a href="https://github.com/fernandezluk4s" target="_blank" class="btn-s">Ver GitHub &nbsp;<i class="fab fa-github"></i></a>
+    </div>
+
+    <div class="projects-grid">
+
+        <!-- Featured -->
+        <div class="proj-card featured reveal">
+            <div class="proj-num">01</div>
+            <span class="proj-tag">IoT · Hardware · Acessibilidade</span>
+            <h3>Sistema Assistivo Zero-Touch</h3>
+            <p>
+                Sistema assistivo baseado no microcontrolador <strong>ESP32</strong> com comunicação via protocolo <strong>MQTT</strong>. Projetado para automação inteligente e acessibilidade, o sistema permite controle de dispositivos físicos sem contato, com alto impacto social. Demonstra capacidade de projetar soluções IoT completas — do hardware à lógica de comunicação.
+            </p>
+            <div class="proj-techs">
+                <span class="proj-tech">ESP32</span>
+                <span class="proj-tech">MQTT</span>
+                <span class="proj-tech">C / C++</span>
+                <span class="proj-tech">IoT</span>
+                <span class="proj-tech">Broker MQTT</span>
+                <span class="proj-tech">Eletrônica</span>
+            </div>
+            <div class="proj-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+
+        <div class="proj-card reveal">
+            <div class="proj-num">02</div>
+            <span class="proj-tag">Java · Software · POO</span>
+            <h3>Sistema de Gerenciamento de Estoque e Vendas</h3>
+            <p>
+                Aplicação Java desenvolvida para disciplina de programação. Consolida POO com controle de fluxo de produtos, processamento de vendas e regras de negócio complexas — simulando um ambiente comercial real.
+            </p>
+            <div class="proj-techs">
+                <span class="proj-tech">Java</span>
+                <span class="proj-tech">POO</span>
+                <span class="proj-tech">MySQL</span>
+                <span class="proj-tech">Lógica de Negócio</span>
+            </div>
+            <div class="proj-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+
+        <div class="proj-card reveal">
+            <div class="proj-num">03</div>
+            <span class="proj-tag">Python · Sistemas · Saúde</span>
+            <h3>Aplicação de Triagem Médica</h3>
+            <p>
+                Software em Python criado para Sistemas Especializados. Otimiza o fluxo de atendimento em ambientes de saúde com classificação inteligente de pacientes, regras clínicas e processamento de dados estruturados.
+            </p>
+            <div class="proj-techs">
+                <span class="proj-tech">Python</span>
+                <span class="proj-tech">Algoritmos</span>
+                <span class="proj-tech">Fluxo de Dados</span>
+            </div>
+            <div class="proj-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+
+        <div class="proj-card reveal">
+            <div class="proj-num">04</div>
+            <span class="proj-tag">Eletrônica · Áudio · DIY</span>
+            <h3>Mesa de Som com Op-Amp (NE5532)</h3>
+            <p>
+                Mixer de áudio analógico construído do zero com amplificadores NE5532, fonte simétrica ±12V e conectores P10. Projeto de baixo custo com foco em desempenho e viabilidade, integrando eletrônica analógica e engenharia de áudio.
+            </p>
+            <div class="proj-techs">
+                <span class="proj-tech">NE5532</span>
+                <span class="proj-tech">OpAmp</span>
+                <span class="proj-tech">±12V</span>
+                <span class="proj-tech">P10</span>
+                <span class="proj-tech">PCB</span>
+            </div>
+            <div class="proj-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+
+        <div class="proj-card reveal">
+            <div class="proj-num">05</div>
+            <span class="proj-tag">Web · JavaScript · DSP</span>
+            <h3>VocalKey — Detecção de Pitch em Tempo Real</h3>
+            <p>
+                Web app que detecta a tonalidade vocal em tempo real usando os algoritmos YIN e HPS, com perfilamento de chave musical via Krumhansl-Schmuckler. Combina processamento de sinal digital com desenvolvimento web moderno.
+            </p>
+            <div class="proj-techs">
+                <span class="proj-tech">JavaScript</span>
+                <span class="proj-tech">Web Audio API</span>
+                <span class="proj-tech">YIN</span>
+                <span class="proj-tech">HPS</span>
+                <span class="proj-tech">DSP</span>
+            </div>
+            <div class="proj-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ── TIMELINE ── -->
+<section id="trajectory">
+    <span class="section-label reveal">// trajetória acadêmica</span>
+    <h2 class="reveal">Minha <span class="hl">linha do tempo.</span></h2>
+
+    <div class="timeline">
+        <div class="tl-item reveal">
+            <div class="tl-year">2023</div>
+            <h3>Ingresso na Engenharia de Computação — UVA</h3>
+            <p>Início da graduação na Universidade Veiga de Almeida, Rio de Janeiro. Primeiros contatos com lógica de programação, eletrônica básica e arquitetura de computadores.</p>
+        </div>
+        <div class="tl-item reveal">
+            <div class="tl-year">2024</div>
+            <h3>Projetos Práticos & Sistemas Embarcados</h3>
+            <p>Desenvolvimento de projetos com ESP32 e Arduino, primeiro contato com MQTT e IoT. Início dos estudos em dispositivos eletrônicos com base no Boylestad & Nashelsky (análise de BJTs, amplificadores de dois estágios).</p>
+        </div>
+        <div class="tl-item reveal">
+            <div class="tl-year">2025</div>
+            <h3>Projetos de Software & Eletrônica Avançada</h3>
+            <p>Sistema de Gerenciamento em Java, Triagem Médica em Python, Mesa de Som com NE5532, VocalKey. Construção do portfólio técnico e certificações. Primeiro currículo ATS para estágio.</p>
+        </div>
+        <div class="tl-item reveal">
+            <div class="tl-year">2026 →</div>
+            <h3>Estágio & Crescimento Profissional</h3>
+            <p>Em busca do primeiro estágio em TI, desenvolvimento de software ou sistemas embarcados. Continuando projetos práticos e aprofundando stack técnica.</p>
+        </div>
+        <div class="tl-item reveal">
+            <div class="tl-year">Dez 2027</div>
+            <h3>Previsão de Formatura</h3>
+            <p>Conclusão do curso de Engenharia de Computação pela Universidade Veiga de Almeida.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── SOCIAL ── -->
+<section id="social">
+    <div class="social-inner">
+        <div class="social-header reveal">
+            <span class="section-label">// conecte-se</span>
+            <h2>Vamos <span class="hl">conversar?</span></h2>
+        </div>
+
         <div class="social-grid">
-            <a href="https://wa.me/5521997601389" class="social-card">
-                <i class="fab fa-whatsapp"></i>
-                <span>WhatsApp</span>
-            </a>
-            <a href="https://www.instagram.com/fernandez.luk4s/" class="social-card">
-                <i class="fab fa-instagram"></i>
-                <span>Instagram</span>
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=100026624640677" class="social-card">
-                <i class="fab fa-facebook"></i>
-                <span>Facebook</span>
-            </a>
-            <a href="https://www.tiktok.com/@fernandezluk4s?lang=pt-BR" class="social-card">
-                <i class="fab fa-tiktok"></i>
-                <span>TikTok</span>
-            </a>
-            <a href="https://t.me/fernandezluk4s" class="social-card">
-                <i class="fab fa-telegram"></i>
-                <span>Telegram</span>
-            </a>
-            <a href="https://discord.com/users/850464307627950101" class="social-card">
-                <i class="fab fa-discord"></i>
-                <span>Discord</span>
-            </a>
-            <a href="https://www.linkedin.com/in/lucasassfernandes/" class="social-card">
+            <a href="https://www.linkedin.com/in/lucasassfernandes/" target="_blank" class="social-card">
                 <i class="fab fa-linkedin"></i>
                 <span>LinkedIn</span>
             </a>
-            <a href="https://github.com/fernandezluk4s" class="social-card">
+            <a href="https://github.com/fernandezluk4s" target="_blank" class="social-card">
                 <i class="fab fa-github"></i>
                 <span>GitHub</span>
             </a>
+            <a href="https://wa.me/5521997601389" target="_blank" class="social-card">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </a>
+            <a href="https://t.me/fernandezluk4s" target="_blank" class="social-card">
+                <i class="fab fa-telegram"></i>
+                <span>Telegram</span>
+            </a>
+            <a href="https://www.instagram.com/fernandez.luk4s/" target="_blank" class="social-card">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+            <a href="https://discord.com/users/850464307627950101" target="_blank" class="social-card">
+                <i class="fab fa-discord"></i>
+                <span>Discord</span>
+            </a>
+            <a href="https://www.tiktok.com/@fernandezluk4s" target="_blank" class="social-card">
+                <i class="fab fa-tiktok"></i>
+                <span>TikTok</span>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100026624640677" target="_blank" class="social-card">
+                <i class="fab fa-facebook"></i>
+                <span>Facebook</span>
+            </a>
         </div>
-    </section>
+    </div>
+</section>
 
-        <footer id="contact">
-            <div class="footer-content">
-                <div class="footer-info">
-                    <h3>LUCAS FERNANDES</h3>
-                    <p>Nova Iguaçu, Rio de Janeiro</p>
-                    <!--<div class="socials">
-                        <a href="https://www.linkedin.com/in/lucas-de-almeida-silva-sigolo-fernandes-0b04a4310/"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://wa.me/5521965610481"><i class="fab fa-whatsapp"></i></a>
-                    </div>-->
-                </div>
-                <div class="footer-links">
-                    <h4>Recursos</h4>
-                    <ul>
-                        <li><a href="https://drive.google.com/uc?export=download&id=1y4djDtm1k4gLYWzKIqottihi2oKzNqOh">Download CV</a></li>
-                        <li><a href="#about">Minha Metodologia</a></li>
-                        <li><a href="https://www.linkedin.com/in/lucasassfernandes/details/certifications/" target="_blank">Ver Certificados</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                © 2026 Lucas de Almeida Silva Sigolo Fernandes. Todos os direitos reservados.
-            </div>
-        </footer>
+<!-- ── FOOTER ── -->
+<footer>
+    <span class="footer-logo">LUCAS<span>.</span>DEV</span>
+    <ul class="footer-links">
+        <li><a href="https://drive.google.com/uc?export=download&id=1y4djDtm1k4gLYWzKIqottihi2oKzNqOh">Download CV</a></li>
+        <li><a href="https://www.linkedin.com/in/lucasassfernandes/details/certifications/" target="_blank">Certificados</a></li>
+        <li><a href="https://github.com/fernandezluk4s" target="_blank">GitHub</a></li>
+    </ul>
+    <span class="copyright">© 2026 Lucas Fernandes · Nova Iguaçu, RJ</span>
+</footer>
 
-        <script src="script.js"></script>
-    </body>
+<script>
+    // Scroll reveal
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                obs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Nav active link
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+        let cur = '';
+        sections.forEach(s => {
+            if (window.scrollY >= s.offsetTop - 80) cur = s.id;
+        });
+        document.querySelectorAll('.nav-links a').forEach(a => {
+            a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--accent)' : '';
+        });
+    });
+</script>
+</body>
 </html>
