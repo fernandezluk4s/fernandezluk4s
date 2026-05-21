@@ -663,7 +663,7 @@
         }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             #about { grid-template-columns: 1fr; gap: 60px; }
             .about-img-wrap img { max-width: 100%; }
             .stats-bar { grid-template-columns: repeat(2, 1fr); }
@@ -675,21 +675,54 @@
             footer { flex-direction: column; gap: 24px; text-align: center; }
             .footer-links { flex-wrap: wrap; justify-content: center; }
             .nav-links { display: none; }
-            .chip{
-                font-size: .55rem;
-                padding: 4px 10px;
-                letter-spacing: .1em;
+            #home{
+                padding: 120px 5% 80px;
+                overflow: hidden;
+            }
+
+            .hero-inner{
+                max-width: 100%;
+                width: 100%;
             }
 
             .hero-title{
-                font-size: clamp(2rem, 13vw, 3.2rem);
-                line-height: 0.95;
+                font-size: clamp(2.2rem, 15vw, 4rem);
+                line-height: .92;
+                letter-spacing: -.04em;
+                width: 100%;
+            }
+
+            .hero-title span{
+                white-space: nowrap;
             }
 
             .hero-desc{
                 font-size: .72rem;
+                line-height: 1.7;
+                max-width: 95%;
+            }
+
+            .hero-btns{
+                width: 100%;
+                gap: 12px;
+            }
+
+            .hero-btns a{
+                flex: 1;
+                text-align: center;
+                padding: 14px 10px;
+                font-size: .68rem;
+            }
+
+            .chip{
+                width: fit-content;
                 max-width: 100%;
-                line-height: 1.8;
+                font-size: .52rem;
+                padding: 5px 10px;
+            }
+
+            body{
+                overflow-x: hidden;
             }
         }
 
