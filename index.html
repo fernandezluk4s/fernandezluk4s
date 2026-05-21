@@ -160,10 +160,6 @@
         .hl { color: var(--accent); }
         .hl2 { color: var(--accent2); }
 
-        .hero-title span{
-            white-space: nowrap;
-        }
-
         .hero-desc {
             color: var(--muted);
             font-size: .85rem;
@@ -663,54 +659,20 @@
         }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 400px){
+        @media (max-width: 900px) {
+            #about { grid-template-columns: 1fr; gap: 60px; }
+            .about-img-wrap img { max-width: 100%; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .stat { border-bottom: 1px solid var(--border); }
+            .skills-grid { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .proj-card.featured { grid-column: span 1; }
+            .social-grid { grid-template-columns: repeat(2, 1fr); }
+            footer { flex-direction: column; gap: 24px; text-align: center; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+            .nav-links { display: none; }
+        }
 
-    body{
-        overflow-x: hidden;
-    }
-
-    #home{
-        padding: 110px 24px 70px;
-    }
-
-    .hero-title{
-        font-size: clamp(2.4rem, 11vw, 4rem);
-        line-height: .92;
-        letter-spacing: -.04em;
-        margin-bottom: 22px;
-        width: 100%;
-        overflow-wrap: normal;
-        word-break: keep-all;
-    }
-
-    .hero-title span{
-        display: block;
-        white-space: nowrap;
-    }
-
-    .chip{
-        font-size: .52rem;
-        padding: 5px 10px;
-        margin-bottom: 24px;
-    }
-
-    .hero-desc{
-        font-size: .72rem;
-        line-height: 1.8;
-        max-width: 100%;
-    }
-
-    .hero-btns{
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .hero-btns a{
-        width: 100%;
-        text-align: center;
-    }
-}
         /* ── SCROLL REVEAL ── */
         .reveal {
             opacity: 0;
@@ -741,11 +703,10 @@
 <section id="home">
     <div class="hero-inner">
         <div class="chip">Disponível para Estágio · Rio de Janeiro</div>
-        <h1 class="hero-title">
-            <span>Engenharia de</span><br>
-            <span>Computação &amp;</span><br>
-            <span class="hl">Sistemas</span><br>
-            <span class="hl2">Inteligentes.</span>
+        <h1>
+            Engenharia de<br>
+            Computação &amp;<br>
+            <span class="hl">Sistemas</span> <span class="hl2">Inteligentes.</span>
         </h1>
         <p class="hero-desc">
             Estudante na UVA · Rio de Janeiro. Construo soluções que cruzam o mundo físico com o digital — de microcontroladores embarcados a aplicações web robustas.
