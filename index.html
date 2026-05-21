@@ -663,69 +663,54 @@
         }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 900px) {
-            #about { grid-template-columns: 1fr; gap: 60px; }
-            .about-img-wrap img { max-width: 100%; }
-            .stats-bar { grid-template-columns: repeat(2, 1fr); }
-            .stat { border-bottom: 1px solid var(--border); }
-            .skills-grid { grid-template-columns: 1fr; }
-            .projects-grid { grid-template-columns: 1fr; }
-            .proj-card.featured { grid-column: span 1; }
-            .social-grid { grid-template-columns: repeat(2, 1fr); }
-            footer { flex-direction: column; gap: 24px; text-align: center; }
-            .footer-links { flex-wrap: wrap; justify-content: center; }
-            .nav-links { display: none; }
-            #home{
-                padding: 120px 5% 80px;
-                overflow: hidden;
-            }
+        @media (max-width: 900px){
 
-            .hero-inner{
-                max-width: 100%;
-                width: 100%;
-            }
+    body{
+        overflow-x: hidden;
+    }
 
-            .hero-title{
-                font-size: clamp(2.2rem, 15vw, 4rem);
-                line-height: .92;
-                letter-spacing: -.04em;
-                width: 100%;
-            }
+    #home{
+        padding: 110px 24px 70px;
+    }
 
-            .hero-title span{
-                white-space: nowrap;
-            }
+    .hero-title{
+        font-size: clamp(2.4rem, 11vw, 4rem);
+        line-height: .92;
+        letter-spacing: -.04em;
+        margin-bottom: 22px;
+        width: 100%;
+        overflow-wrap: normal;
+        word-break: keep-all;
+    }
 
-            .hero-desc{
-                font-size: .72rem;
-                line-height: 1.7;
-                max-width: 95%;
-            }
+    .hero-title span{
+        display: block;
+        white-space: nowrap;
+    }
 
-            .hero-btns{
-                width: 100%;
-                gap: 12px;
-            }
+    .chip{
+        font-size: .52rem;
+        padding: 5px 10px;
+        margin-bottom: 24px;
+    }
 
-            .hero-btns a{
-                flex: 1;
-                text-align: center;
-                padding: 14px 10px;
-                font-size: .68rem;
-            }
+    .hero-desc{
+        font-size: .72rem;
+        line-height: 1.8;
+        max-width: 100%;
+    }
 
-            .chip{
-                width: fit-content;
-                max-width: 100%;
-                font-size: .52rem;
-                padding: 5px 10px;
-            }
+    .hero-btns{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
 
-            body{
-                overflow-x: hidden;
-            }
-        }
-
+    .hero-btns a{
+        width: 100%;
+        text-align: center;
+    }
+}
         /* ── SCROLL REVEAL ── */
         .reveal {
             opacity: 0;
